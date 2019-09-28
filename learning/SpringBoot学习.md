@@ -1,29 +1,15 @@
 #  **Spring Boot学习**
 
-###  **配置java环境变量:**
-```
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.222.b10-1.el7_7.x86_64 
-export PATH=$PATH:$JAVA_HOME/bin
-source /etc/profile
-```
-###  **配置maven环境变量:**
-	http://mirrors.shu.edu.cn/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
-	
-#### 解压
-`tar vxf apache-maven-3.5.2-bin.tar.gz`
+## **自动配置的原理**
 
-#### 移动
-```
-mv apache-maven-3.5.2 /usr/local/maven3
-MAVEN_HOME=/usr/local/maven3
-export MAVEN_HOME
-export PATH=${PATH}:${MAVEN_HOME}/bin
-```
+	- Spring Boot 在启动时扫描项目所依赖的 jar 包，寻找包含spring.factories 文件的 jar 包。
+	- 根据 spring.factories 配置加载 AutoConfigure 类。
+	- 根据 @Conditional 等条件注解 的条件，进行自动配置并将 Bean 注入 Spring IoC 中。
+
 
 ##	**SpringBoot部署docker**
 
 ###	**DockerFile构建镜**
-
 在 pom.xml-properties 中添加 Docker 镜像名称
 ```
 <properties>
