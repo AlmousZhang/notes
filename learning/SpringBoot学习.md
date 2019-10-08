@@ -6,6 +6,22 @@
 	- 根据 spring.factories 配置加载 AutoConfigure 类。
 	- 根据 @Conditional 等条件注解 的条件，进行自动配置并将 Bean 注入 Spring IoC 中。
 
+Spring Boot的启动：
+第一部分进行SpringApplication的初始化模块，配置一些基本的环境变量、资源、构造器、监听器
+第二部分实现了应用具体的启动方案，包括启动流程的监听模块、加载配置环境模块、及核心的创建上下文环境模块
+第三部分是自动化配置模块，该模块作为springboot自动配置核心
+@SpringBootApplication注解：
+-- @SpringBootConfiguration：SpringBoot根据应用所声明的依赖来对Spring框架进行自动配置
+-- @ComponentScan：组件扫描，可自动发现和装配Bean，默认扫描SpringApplication的run方法里的启动方法
+所在的包路径下文件，所以最好将该启动类放到根包路径下
+-- @EnableAutoConfiguration：被标注的类等于在spring的XML配置文件中(applicationContext.xml)，装配所有
+bean事务，提供了一个spring的上下文环境
+@EnableAutoConfiguration -> @Import(AutoConfigurationImportSelector.class) ->org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#selectImports
+-> org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getCandidateConfigurations
+
+
+https://www.cnblogs.com/xiaoxi/p/7999885.html
+
 
 ##	**SpringBoot部署docker**
 
@@ -125,11 +141,38 @@ Java 注解编程模型
 
 curl的使用：
 
+	curl http://localhost:8080/sse/randomNumbers
 
-curl http://localhost:8080/sse/randomNumbers
+ 
+## **SpringBoot 面试题**
 
+1. Spring Boot 是什么？Spring Boot、Spring MVC 和 Spring 有什么区别？
+Spring Boot 是 Spring 开源组织下的子项目，是 Spring 组件一站式解决方案，主要是简化了使用 Spring 的难度，简省了繁重的配置，提供了各种启动器，开发者能快速上手
 
-git 使用：
- git fetch origin dev（dev为远程仓库的分支名）
- git checkout -b dev(本地分支名称) origin/dev(远程分支名称)
- git pull origin dev(远程分支名称)
+2. Spring Boot 提供了哪些核心功能？
+application配置文件是应用级别的，是当前应用的配置文件。
+bootstrap配置文件是系统级别的，用来加载外部配置，如配置中心的配置信息，也可以用来定义系统不会变化的属性。bootstatp文件的加载先于application文件。
+
+3. Spring Boot 有什么优缺点？
+
+4. Spring Boot 中的 Starter 是什么？
+Starters可以理解为启动器，它包含了一系列可以集成到应用里面的依赖包，你可以一站式集成 Spring 及其他技术，而不需要到处找示例代码和依赖包。Starters包含了许多项目中需要用到的依赖，它们能快速持续的运行，都是一系列得到支持的管理传递性依赖。
+
+5. Spring Boot 配置加载顺序？
+
+6. @SpringBootApplication核心注解
+启动类上面的注解是@SpringBootApplication，它也是 Spring Boot 的核心注解，主要组合包含了以下 3 个注解：
+@SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
+@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，
+如关闭数据源自动配置功能：@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
+@ComponentScan：Spring组件扫描。
+
+7. 什么是 Spring Boot 自动配置？
+
+8. Spring Boot 支持哪些日志框架？
+
+9. 开启 Spring Boot 特性有哪几种方式？
+	继承spring-boot-starter-parent项目
+	导入spring-boot-dependencies项目依赖
+
+**面试题**
