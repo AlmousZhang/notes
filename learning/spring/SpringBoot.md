@@ -19,8 +19,11 @@ bean事务，提供了一个spring的上下文环境
 @EnableAutoConfiguration -> @Import(AutoConfigurationImportSelector.class) ->org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#selectImports
 -> org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getCandidateConfigurations
 
+参考：
 
-https://www.cnblogs.com/xiaoxi/p/7999885.html
+[1.springBoot2启动](https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&mid=2247486739&idx=1&sn=174827f0ff5fb6c999e65ee80266bc39&chksm=eb538825dc240133c6eae1c051c2902786fdee84fcebf1df35eaf72809286088daebb3b977fd&scene=21#wechat_redirect)
+
+[2.启动原理解析-平凡希](https://www.cnblogs.com/xiaoxi/p/7999885.html)
 
 
 ##	**SpringBoot部署docker**
