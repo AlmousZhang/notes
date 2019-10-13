@@ -16,3 +16,40 @@ Consul 的优势：
 综合比较, Consul 作为服务注册和配置管理的新星, 比较值得关注和研究
 
 ## *Spring Cloud Gateway*
+
+
+
+# **总数**
+web服务器选型：
+
+feign ribbon zuul Hystrix
+
+redis缓存
+
+Eureka：服务注册和发现的产品
+	服务中心又称注册中心，管理各种服务功能包括服务的注册、发现、熔断、负载、降级等
+	Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers.
+
+mvn clean package
+# 分别以peer1和peeer2 配置信息启动eureka
+java -jar spring-cloud-eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer1
+java -jar spring-cloud-eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer2
+
+java -jar spring-cloud-consumer-0.0.1-SNAPSHOT.jar
+
+java -jar spring-cloud-eureka-0.0.1-SNAPSHOT.jar
+
+java -jar spring-cloud-producer-0.0.1-SNAPSHOT.jar
+
+发布平台
+jenkins
+
+## 网关
+
+Nginx 静态编译?
+Nginx 在启动后，会有一个 Master 进程和多个 Worker 进程，Master 进程和 Worker 进程之间是通过进程间通信进行交互的
+Master和worker线程的作用是啥？
+Nginx的工作原理？
+
+Zuul ：
+	

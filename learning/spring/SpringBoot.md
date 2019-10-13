@@ -1,6 +1,6 @@
 #  **Spring Boot学习**
 
-## **自动配置的原理**
+## 自动配置的原理
 
 	- Spring Boot 在启动时扫描项目所依赖的 jar 包，寻找包含spring.factories 文件的 jar 包。
 	- 根据 spring.factories 配置加载 AutoConfigure 类。
@@ -147,6 +147,8 @@ curl的使用：
 	curl http://localhost:8080/sse/randomNumbers
 
  
+
+
 ## **SpringBoot 面试题**
 
 1. Spring Boot 是什么？Spring Boot、Spring MVC 和 Spring 有什么区别？
@@ -179,3 +181,42 @@ Starters可以理解为启动器，它包含了一系列可以集成到应用里
 	导入spring-boot-dependencies项目依赖
 
 **面试题**
+
+## *定义*
+	Spring Boot:Spring的子项目，提供Spring的引导功能。通过 Spring Boot ，我们开发者可以快速配置 Spring 项目，
+	引入各种 Spring MVC、Spring Transaction、Spring AOP、MyBatis 等等框架，而无需不断重复编写繁重的 Spring 配置，降低了 Spring 的使用成本。
+Spring Boot 提供了各种 Starter 启动器，提供标准化的默认配置
+
+## *优势*
+	pring Boot 的缺点主要是，因为自动配置 Spring Bean 的功能，我们可能无法知道，哪些 Bean 被进行创建了。
+	这个时候，如果我们想要自定义一些 Bean ，可能存在冲突，或者不知道实际注入的情况
+
+## *Spring的热启动*
+	spring-boot-devtools
+
+## *Spring Boot的配置加载顺序*	
+	1. spring-boot-devtools 依赖的 spring-boot-devtools.properties 配置文件。
+	2. 单元测试上的 @TestPropertySource 和 @SpringBootTest 注解指定的参数。
+	3. 命令行指定的参数。例如 java -jar springboot.jar --server.port=9090 。
+	4. 命令行中的 spring.application.json 指定参数。例如 java -Dspring.application.json='{"name":"Java"}' -jar springboot.jar 。
+	5. ServletConfig 初始化参数。
+	6. ServletContext 初始化参数。
+	7. JNDI 参数。例如 java:comp/env 。
+	8. Java 系统变量，即 System#getProperties() 方法对应的。
+	9. 操作系统环境变量。
+	10. RandomValuePropertySource 配置的 random.* 属性对应的值。
+	11. Jar 外部的带指定 profile 的 application 配置文件。例如 application-{profile}.yaml 。
+	12. Jar 内部的带指定 profile 的 application 配置文件。例如 application-{profile}.yaml 。
+	13. Jar 外部 application 配置文件。例如 application.yaml 。
+	14. Jar 内部 application 配置文件。例如 application.yaml 。
+	15. 在自定义的 @Configuration 类中定于的 @PropertySource 。
+	16. 启动的 main 方法中，定义的默认配置。即通过 SpringApplication#setDefaultProperties(Map<String, Object> defaultProperties) 方法进行设置。
+
+## *Spring Boot核心注解*	
+	@SpringBootApplication
+		@SpringBootConfiguration
+		@EnableAutoConfiguration
+		@ComponentScan
+		参考：
+		https://blog.csdn.net/zhou920786312/article/details/84326023
+		https://blog.csdn.net/claram/article/details/75125749

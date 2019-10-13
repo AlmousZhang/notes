@@ -19,3 +19,4 @@
 4. Serializable 序列化
 
 	实现细节：[事务的隔离级别](https://juejin.im/post/5c9b1b7df265da60e21c0b57)
+
