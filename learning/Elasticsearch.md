@@ -59,4 +59,26 @@ curl -i -XGET 'localhost:9200/'
 chown -R esUser /opt/elasticsearch-5.5.1
 ```
 
+安装分词插件
+下载安装：
+```
+wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.4.0/elasticsearch-analysis-ik-5.4.0.zip
+unzip elasticsearch-analysis-ik-5.4.0.zip
+mv elasticsearch ik
+```
+重启es服务器
+
+
+sudo chown -R esUser /opt/elasticsearch-5.5.1/plugins/ik
+
 远程访问：curl -X GET http://120.27.224.128:9200
+
+## elasticsearch概念
+1. Node 与 Cluster
+	Elastic 本质上是一个分布式数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。单个 Elastic 实例称为一个节点（node）。一组节点构成一个集群（cluster）。
+
+2. Index
+	Elastic 会索引所有字段，经过处理后写入一个反向索引（Inverted Index）。查找数据的时候，直接查找该索引。所以，Elastic 数据管理的顶层单位就叫做 Index（索引）。它是单个数据库的同义词。每个 Index （即数据库）的名字必须是小写。
+3. Type
+	Document的分组
+	
