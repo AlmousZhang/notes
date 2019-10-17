@@ -52,4 +52,21 @@ Master和worker线程的作用是啥？
 Nginx的工作原理？
 
 Zuul ：
-	
+
+
+Feth
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600000
+
+ribbon:
+  ConnectTimeout: 30000
+  ReadTimeout: 600000
