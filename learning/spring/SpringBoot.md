@@ -195,6 +195,7 @@ Spring Boot 提供了各种 Starter 启动器，提供标准化的默认配置
 	spring-boot-devtools
 
 ## *Spring Boot的配置加载顺序*	
+
 	1. spring-boot-devtools 依赖的 spring-boot-devtools.properties 配置文件。
 	2. 单元测试上的 @TestPropertySource 和 @SpringBootTest 注解指定的参数。
 	3. 命令行指定的参数。例如 java -jar springboot.jar --server.port=9090 。

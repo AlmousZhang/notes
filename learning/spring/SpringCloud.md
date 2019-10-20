@@ -8,15 +8,55 @@
 1. **Consul**
 
 Consul 的优势：
-	1 使用 Raft 算法来保证一致性, 比复杂的 Paxos 算法更直接. 相比较而言, zookeeper 
-	2 采用的是 Paxos, 而 etcd 使用的则是 Raft。
-	3 支持多数据中心，内外网的服务采用不同的端口进行监听。
-	4 多数据中心集群可以避免单数据中心的单点故障,而其部署则需要考虑网络延迟, 分片等情况等。 zookeeper 和 etcd 均不提供多数据中心功能的支持。
-	5 支持健康检查。 etcd 不提供此功能。
-	6 支持 http 和 dns 协议接口。 zookeeper 的集成较为复杂, etcd 只支持 http 协议。
-	7 官方提供 web 管理界面, etcd 无此功能。
-综合比较, Consul 作为服务注册和配置管理的新星, 比较值得关注和研究
 
+	1. 使用 Raft 算法来保证一致性, 比复杂的 Paxos 算法更直接. 相比较而言, zookeeper 
+	2. 采用的是 Paxos, 而 etcd 使用的则是 Raft。
+	3. 支持多数据中心，内外网的服务采用不同的端口进行监听。
+	4. 多数据中心集群可以避免单数据中心的单点故障,而其部署则需要考虑网络延迟, 分片等情况等。 zookeeper 和 etcd 均不提供多数据中心功能的支持。
+	5. 支持健康检查。 etcd 不提供此功能。
+	6. 支持 http 和 dns 协议接口。 zookeeper 的集成较为复杂, etcd 只支持 http 协议。
+	7. 官方提供 web 管理界面, etcd 无此功能。
+	
+- 服务注册/发现
+
+	Consul提供的服务注册/发现功能在数据强一致性和分区容错性上都有非常好的保证，但在集群可用性下就会稍微差一些
+	
+- 数据强一致性保证
+
+	Consul采用了一致性算法Raft来保证服务列表数据在数据中心中各Server下的强一致性，这样能保证同一个数据中心下不
+管某一台Server Down了，请求从其他Server中同样也能获取的最新的服务列表数据。数据强一致性带来的副作用是当数据
+在同步或者Server在选举Leader过程中，会出现集群不可用。
+- 多数据中心
+
+	Consul支持多数据中心(Data Center),多个数据中心之间通过Gossip协议进行数据同步。多数据中心的好处是当某个数据
+中心出现故障时，其他数据中心可以继续提供服务，提升了可用性。
+- 健康检查
+
+	Consul支持基本硬件资源方面的检查，如：CPU、内存、硬盘等
+- Key/Value存储
+
+	Consul支持Key/Value存储功能，可以将Consul作为配置中心使用，可以将一些公共配置信息配置到Consul，然后通过Consul
+提供的 HTTP API来获取对应Key的Value。
+
+	- Agent
+1. 是一个守护线程
+2. 跟随Consul应用启动而启动
+3. 负责检查、维护节点同步
+
+	- Client
+1. 转发所有请求给Server
+2. 无状态，不持久化数据
+3. 参与LAN Gossip的健康检查
+
+	- Server
+1. 持久化数据
+2. 转发请求给Server-Leader
+3. 参与Server-Leader选举
+4. 通过WAN Gossip，与其他数据中心交换数据
+
+	- Server-Leader
+1. 响应RPC请求
+2. 服务列表数据同步给Serve
 
 2. **Eureka**
 
@@ -60,6 +100,20 @@ Eureka就认为客户端与注册中心出现了网络故障，此时会出现�
 
 参考：
 	[Eureka的架构与原理](https://www.infoq.cn/article/jlDJQ*3wtN2PcqTDyokh)
+
+**Zookeeper**
+Leader-Server：Leader负责进行投票的发起和决议，更新系统中的数据状态
+Server：Server中存在两种类型：Follower和Observer。其中Follower接受客户端的请求并返回结果(事务请求将转发给Leader处理)，并在选举过程中参与投票；Observer与Follower功能一致，但是不参与投票过程，它的存在是为了提高系统的读取速度
+Client：请求发起方，Server和Client之间可以通过长连接的方式进行交互。如发起注册或者请求集群信息等。
+最后我们通过一张表格大致了解Eureka、Consul、Zookeeper的异同点。选择什么类型的服务注册与发现组件可以根据自身项目要求决定。
+
+组件名|语言|CAP|一致性算法|服务健康检查|对外暴露接口|Spring Cloud集成
+--|:--|:--|:--|:--|:--|:--|:
+Eureka|Java|AP|无|可配支持|HTTP|已集成
+Consul|Go|CP|Raft|支持|HTTP/DNS|已集成
+Zookeeper|Java|CP|Paxos|支持|客户端|已集成
+
+[服务发现的比较](https://www.jianshu.com/p/e72e3b208a0b)
 
 ## *Spring Cloud Gateway*
 
